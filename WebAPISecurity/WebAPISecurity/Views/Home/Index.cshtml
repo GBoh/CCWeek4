@@ -1,0 +1,32 @@
+﻿<ul id="product-list"></ul>
+
+@section scripts{
+    <script>
+        $.ajax('/token', {
+            type: 'POST',
+            data: {
+                grant_type: 'password',
+                userName: 'Greg',
+                password: 'password'
+            }
+        }).done(function (results) {
+            sessionStorage.setItem('token', results.access_token);
+            getProducts();
+        }).fail(function (xhr) {
+            debugger;
+        });
+
+        function getProducts() {
+            $.ajax('/API/Products', {
+                headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem('token', sessionStorage.getItem('token'))
+                }
+            }).done(function (data) {
+                $('#product-list').empty();
+                data.forEach(function (product) {
+                    $('<li>').text(product.Name + ' $' + product.Price).appendTo('#product-list');
+                });
+            });
+        }
+    </script>
+}

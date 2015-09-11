@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+
+
+<script>
+    function SendAjax(httpRequest, url, callback) {
+        var xhr = new XMLHttpRequest();
+
+        xhr.addEventListener('load', function (e) {
+            callback(xhr);
+        });
+
+        xhr.open(httpRequest, url);
+        xhr.send();
+    }
+
+    SendAjax('GET', '/products.json', function (e) {
+        var data = JSON.parse(e.responseText);
+        console.dir(data);
+    });
+</script>

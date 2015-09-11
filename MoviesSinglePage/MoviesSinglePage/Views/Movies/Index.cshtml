@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div id="content">
+    <ul id="listMovies"></ul>
+</div>
+
+@section scripts{
+    <script>
+        $.getJSON('/api/Movies').done(function (data) {
+            data.forEach(function (movie) {
+                $('<li>').text(movie.Title + ' directed by ' + movie.Director).appendTo('#listMovies');
+            });
+        });
+    </script>
+}

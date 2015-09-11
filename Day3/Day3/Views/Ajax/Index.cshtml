@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Ajax GitHub</h2>
+
+<form>
+    <label>
+    </label>
+    <input id="textBox" type="text" class="form-control" />
+    <input id="searchUser" type="button" value="search" class="btn btn-primary" />
+</form>
+<div>&nbsp;</div>
+<div class="row">
+    <ul id="gitList"></ul>
+</div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            var userName = "";
+            $('#searchUser').click(function () {
+                userName = $('#textBox').val();
+                displayRepo();
+            });
+
+            function displayRepo() {
+                var repoURL = 'https://api.github.com/users/' + userName + '/repos';
+                $('#gitList').empty();
+
+                $.getJSON(repoURL, function (data) {
+                    $.each(data, function (idx, item) {
+                        $('<li/>').append($('<a/>').attr("href", item.html_url).text(item.name)).appendTo('#gitList');
+                    });
+                });
+            }
+        });
+
+    </script>
+}

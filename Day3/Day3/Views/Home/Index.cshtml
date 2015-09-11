@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div id="elephant" style="position:absolute; left:50px; top:100px; z-index: 3; background: linear-gradient(rgba(255, 0, 0, 0.5),
+                                                                                                            rgba(255, 0, 0, 0.5))">
+    <img width="150px" src="~/Content/images/elephant.png" />
+</div>
+
+
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>
+
+<script>
+    //gets event element
+    var elephant = document.getElementById('elephant');
+    var height = window.innerHeight;
+
+    //event listener
+    elephant.addEventListener('mouseenter', function (e) {
+        var newTop = Math.random() * 1000;
+        var newLeft = Math.random() * 1000;
+
+        if (newTop > height) {
+            newTop /= 2;
+        }
+
+        //sets random color
+        var newRGBA = 'linear-gradient(rgba(' + RandomColorValue() + ',' + RandomColorValue() + ',' + RandomColorValue() + ',0.5),rgba(' + RandomColorValue() + ',' + RandomColorValue() + ',' + RandomColorValue() + ', 0.5))';
+        console.log(newRGBA);
+
+        e.target.style.top = newTop + 'px';
+        e.target.style.left = newLeft + 'px';
+        e.target.style.background = newRGBA;
+        e.target.firstChild = newRGBA;
+    });
+    function RandomColorValue() {
+        return Math.floor(Math.random() * 256);
+    }
+</script>

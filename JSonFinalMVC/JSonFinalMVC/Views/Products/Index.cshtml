@@ -1,0 +1,64 @@
+﻿@model IEnumerable<JSonFinalMVC.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>World's cheapest Teslas</h2>
+
+<form id="frm">
+    <div>
+        <label>
+            Product Name: <input id="name" />
+        </label>
+    </div>
+    <div>
+        <label>
+            Product Price: <input id="price" />
+        </label>
+    </div>
+    <input type="submit" value="Add Product" />
+</form>
+
+<ul id="productsList"></ul>
+
+
+@section scripts{
+    <script>
+        updateProductList();
+
+        function updateProductList() {
+            $.getJSON('/api/Products').done(function (data) {
+                $('#productsList').empty();
+                data.forEach(function (product) {
+                    $('<li>').text(product.Name + ' $' + product.Price).appendTo('#productsList');
+                });
+            });
+        }
+
+        var form = $('#frm');
+        form.on('submit', function (e) {
+            e.preventDefault();
+
+            var product = {
+                Name: $('#name').val(),
+                Price: $('#price').val(),
+            };
+
+            $.post('/api/Products', product)
+                .done(function (data) {
+                    $('#name').val('');
+                    $('#price').val('');
+                    updateProductList();
+                })
+                .fail(function (xhr) {
+                    var errorMessage = '';
+                    var result = JSON.parse(xhr.responseText);
+                    for (var property in result.ModelState) {
+                        errorMessage += result.ModelState[property] + '\n';
+                    }
+                    alert(errorMessage);
+                });
+        });
+    </script>
+}
